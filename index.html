@@ -40,14 +40,24 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Add lights
-    const lightAbove = new THREE.DirectionalLight(0xffffff, 1);
-    lightAbove.position.set(0, 1, 0);
-    scene.add(lightAbove);
+    const lightAbove = new THREE.DirectionalLight(0xffffff, 20);
+lightAbove.position.set(0, 1, 0).normalize();
+scene.add(lightAbove);
 
-    const lightBelow = new THREE.PointLight(0xffffff, 1);
-    lightBelow.position.set(0, -1, 0);
-    scene.add(lightBelow);
+// Add a directional light from below
+const lightBelow = new THREE.PointLight(0xffffff, 50);
+lightBelow.position.set(0, -1, 0).normalize();
+scene.add(lightBelow);
+
+// Add a directional light from the right
+const lightRight = new THREE.PointLight(0xffffff, 50);
+lightRight.position.set(1, 0, 0).normalize();
+scene.add(lightRight);
+
+// Add a directional light from the left
+const lightLeft = new THREE.PointLight(0xffffff, 50);
+lightLeft.position.set(-1, 0, 0).normalize();
+scene.add(lightLeft);
 
     let model, model2;
     const loader = new THREE.GLTFLoader();
@@ -150,8 +160,8 @@
           model2 = gltf.scene;
 
           if (isMobile()) {
-            setModelProperties(model, 0, 1.4, 0);    // Move first model up
-            setModelProperties(model2, 0, -1.4, 0);  // Second model below the first
+            setModelProperties(model, 0, 1.4, -1);    // Move first model up
+            setModelProperties(model2, 0, -1.4, -1);  // Second model below the first
           } else {
             setModelProperties(model, -3, -0.5, 0);  // Default horizontal position
             setModelProperties(model2, 3, -0.5, 0);
